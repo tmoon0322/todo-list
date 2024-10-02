@@ -1,3 +1,45 @@
-body {
-    background-color: aqua;
+* {
+    margin: 0;
+    padding: 0;
 }
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav {
+    height: 50px;
+    background-color: #D2E0FB;
+    display: flex;
+    justify-content: center;
+    border-style: solid;
+    border-width: 3px;
+    border-bottom: none;
+}
+
+.content {
+    display: flex;
+    flex: auto;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: initial;
+    width: 200px;
+    background-color: #D2E0FB;
+    border-style: solid;
+    border-width: 3px;
+    border-right: none;
+}
+
+.main_display {
+    flex: auto;
+    background-color: #D2E0FB;
+    border-style: solid;
+    border-width: 3px;
+}
+

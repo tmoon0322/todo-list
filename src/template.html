@@ -6,19 +6,52 @@
     <title>Document</title>
 </head>
 <body>
+
     <div class="container">
+        <dialog class="project_dialog">
+            <h3>New Project</h3>
+            <form path="example.com/path" method="post" id="project_form">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+                <button type="submit" id="project_submit">Create Project</button>
+                <button type="submit" id="project_cancel">Cancel</button>
+            </form>
+        </dialog>
+
+        <dialog class="task_dialog">
+            <form path="example.com/path" method="post" id="task_form">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description">
+                <label for="dueDate">Due Date:</label>
+                <input type="text" id="dueDate" name="dueDate">
+                <label for="priority">Select Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <button type="submit">Create Task</button>
+            </form>
+        </dialog>
+        
         <div class="nav">
             <h1>Moon Tasks</h1>
         </div>
         <div class="content">
+
             <div class="sidebar">
-                <button>Tasks</button>
-                <button>New Project</button>
+                <button class="task_btn">Tasks</button>
+                <button class="project_btn">New Project</button>
                 <h3>Projects:</h3>
 
             </div>
             <div class="main_display">
                 <h2 class="content_title"> Tasks:</h2>
+                <div class="task_content">
+
+                </div>
             </div>
         </div>
         

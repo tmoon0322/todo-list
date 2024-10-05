@@ -2,6 +2,18 @@
     box-sizing: border-box;
 }
 
+.task {
+    width: 150px;
+    height: 150px;
+    background-color: blue;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 body {
     margin: 0;
 }

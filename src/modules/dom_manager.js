@@ -2,29 +2,36 @@ import { TodoManager } from "./todo_manager";
 
 export const DOMManager = (function () {
 
-    let currentProject;
+    let currentProject = null;
     const projectDialog = document.querySelector('.project_dialog');
     const taskDialog = document.querySelector('.task_dialog');
+    const projectSubmit = document.querySelector('#project_submit');
+    const projectCancel = document.querySelector('#project_cancel');
+    const taskSubmit = document.querySelector('#task_submit');
+    const taskCancel = document.querySelector('#task_cancel');
+    projectSubmit.addEventListener('click', submitProject, false);
+    projectCancel.addEventListener('click', closeDialog, false);
+    taskSubmit.addEventListener('click', submitTask, false);
+    taskCancel.addEventListener('click', closeDialog, false);
+
 
     function init() {
-        const newProjectButton = document.querySelector('.project_btn')
-        const viewTasksButton = document.querySelector('.task_btn')
-        newProjectButton.addEventListener('click', displayProject)
-        viewTasksButton.addEventListener('click', displayAllTasks)
+        const newProjectButton = document.querySelector('.project_btn');
+        const viewTasksButton = document.querySelector('.task_btn');
+        const addTaskButton = document.querySelector('.new_task_btn');
+        addTaskButton.addEventListener('click', showTaskDialog);
+        newProjectButton.addEventListener('click', displayProject);
+        viewTasksButton.addEventListener('click', displayAllTasks);
     }
 
     function displayProject() {
-        const projectDialog = document.querySelector('.project_dialog');
-        const projectSubmit = document.querySelector('#project_submit');
-        const projectCancel = document.querySelector('#project_cancel');
-        projectSubmit.addEventListener('click', submitProject, false);
-        projectCancel.addEventListener('click', closeProject, false);
         projectDialog.showModal();
     }
 
-    function closeProject(event) {
+    function closeDialog(event) {
         event.preventDefault();
         projectDialog.close();
+        taskDialog.close();
     }
 
     function submitProject(event) {
@@ -36,10 +43,13 @@ export const DOMManager = (function () {
         project.textContent = title;
         sideBar.appendChild(sideDiv);
         sideDiv.appendChild(project);
-        projectDialog.close()
+        const newProject = TodoManager.createProject(title)
+        displayTasks(newProject);
+        projectDialog.close();
     }
 
     function displayAllTasks() {
+        currentProject = null;
         const display = document.querySelector('.main_display');
         const testDiv = document.createElement('div');
         testDiv.style.height = '100px';
@@ -47,12 +57,44 @@ export const DOMManager = (function () {
     }
 
     function displayTasks(project) {
-
+        currentProject = project;
+        clearMainDisplay();
+        const display = document.querySelector('.main_display');
+        const div = document.createElement('div');
+        div.className = 'task';
+        const titleElement = document.createElement('p');
+        titleElement.textContent = project.name
+        const dueDateElement = document.createElement('p');
+        dueDateElement.textContent = 'tmrw'
+        div.appendChild(titleElement);
+        div.appendChild(dueDateElement);
+        display.appendChild(div);
     }
 
-    function newTask(project) {
-        
+    function showTaskDialog() {
+        console.log('got here')
+        if (currentProject != null) {
+            taskDialog.showModal();
+        }
     }
 
-    return { init, displayProject, displayAllTasks, displayTasks }
+    function submitTask(event) {
+        event.preventDefault();
+        // START HERE!!!!!!!
+        console.log('submitted the task :)')
+    }
+
+    function clearMainDisplay() {
+        const div = document.querySelector('.task_content');
+        div.innerHTML = ''
+    }
+
+    return {
+        init, 
+        displayProject, 
+        displayAllTasks, 
+        displayTasks, 
+        showTaskDialog,
+        submitTask
+    }
 })()

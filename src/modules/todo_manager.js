@@ -3,11 +3,9 @@ import { Project } from './project.js';
 
 export const TodoManager = (function() {
     const allTasks = [];
-    const allProjects = [];
 
     function createProject(title) {
         const project = new Project(title);
-        allProjects.push(project);
         return project
     }
 
@@ -17,5 +15,16 @@ export const TodoManager = (function() {
         project.taskList.push(task);
     }
 
-    return {createProject, addTask, allProjects, allTasks}
+    function deleteTask(project, taskToDelete) {
+        const index = project.taskList.indexOf(taskToDelete);
+        if (index > -1) {
+        project.taskList.splice(index, 1);
+        }
+        const allIndex = allTasks.indexOf(taskToDelete);
+        if (index > -1) {
+        allTasks.splice(allIndex, 1);
+        }
+    }
+
+    return {createProject, addTask, allTasks, deleteTask}
 })()

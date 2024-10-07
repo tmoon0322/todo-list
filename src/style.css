@@ -2,10 +2,18 @@
     box-sizing: border-box;
 }
 
+.task_content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 150px);
+    grid-template-rows: repeat(3, 150px);
+    gap: 20px;
+    padding: 20px;
+}
+
 .task {
     width: 150px;
     height: 150px;
-    background-color: blue;
+    background-color: #FEF9D9;
     border-radius: 12px;
     display: flex;
     flex-direction: column;

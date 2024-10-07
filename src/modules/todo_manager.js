@@ -16,7 +16,7 @@ export const TodoManager = (function() {
     }
 
     function deleteTask(project, taskToDelete) {
-        const index = project.taskList.indexOf(taskToDelete);
+            const index = project.taskList.indexOf(taskToDelete);
         if (index > -1) {
         project.taskList.splice(index, 1);
         }

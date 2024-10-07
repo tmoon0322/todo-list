@@ -13,6 +13,9 @@ export const DOMManager = (function () {
     projectCancel.addEventListener('click', closeDialog, false);
     taskSubmit.addEventListener('click', submitTask, false);
     taskCancel.addEventListener('click', closeDialog, false);
+    const contentTitle = document.querySelector('.content_title');
+    
+
 
 
     function init() {
@@ -35,44 +38,66 @@ export const DOMManager = (function () {
     }
 
     function submitProject(event) {
+        clearMainDisplay();
         event.preventDefault();
         const sideBar = document.querySelector('.sidebar');
         const title = document.getElementById('project_form').elements['title'].value
         const sideDiv = document.createElement('div');
         const project = document.createElement('p');
+        sideDiv.className = 'project_label'
         project.textContent = title;
         sideBar.appendChild(sideDiv);
         sideDiv.appendChild(project);
-        const newProject = TodoManager.createProject(title)
+        const newProject = TodoManager.createProject(title);
+        sideDiv.addEventListener("click", () => {
+            const project = newProject;
+            displayTasks(project);
+        });
         displayTasks(newProject);
         projectDialog.close();
     }
 
     function displayAllTasks() {
         currentProject = null;
-        const display = document.querySelector('.main_display');
-        const testDiv = document.createElement('div');
-        testDiv.style.height = '100px';
-        display.appendChild(testDiv);
+        clearMainDisplay();
+        const display = document.querySelector('.task_content');
+        contentTitle.textContent = 'All Tasks:';
+        for (const task of TodoManager.allTasks) {
+            const div = document.createElement('div');
+            div.className = 'task';
+            const titleElement = document.createElement('p');
+            titleElement.textContent = task.title;
+            const dueDateElement = document.createElement('p');
+            dueDateElement.textContent = task.dueDate;
+            div.appendChild(titleElement);
+            div.appendChild(dueDateElement);
+            display.appendChild(div);
+        }
     }
 
     function displayTasks(project) {
         currentProject = project;
         clearMainDisplay();
-        const display = document.querySelector('.main_display');
-        const div = document.createElement('div');
-        div.className = 'task';
-        const titleElement = document.createElement('p');
-        titleElement.textContent = project.name
-        const dueDateElement = document.createElement('p');
-        dueDateElement.textContent = 'tmrw'
-        div.appendChild(titleElement);
-        div.appendChild(dueDateElement);
-        display.appendChild(div);
+        const display = document.querySelector('.task_content');
+        contentTitle.textContent = project.name;
+        for (const task of project.taskList) {
+            const div = document.createElement('div');
+            div.className = 'task';
+            const titleElement = document.createElement('p');
+            titleElement.textContent = task.title;
+            const dueDateElement = document.createElement('p');
+            dueDateElement.textContent = task.dueDate;
+            div.appendChild(titleElement);
+            div.appendChild(dueDateElement);
+            display.appendChild(div);
+            div.addEventListener("click", () => {
+                display.removeChild(div);
+                TodoManager.deleteTask(project, task);
+            });
+        }
     }
 
     function showTaskDialog() {
-        console.log('got here')
         if (currentProject != null) {
             taskDialog.showModal();
         }
@@ -80,8 +105,13 @@ export const DOMManager = (function () {
 
     function submitTask(event) {
         event.preventDefault();
-        // START HERE!!!!!!!
-        console.log('submitted the task :)')
+        const title = document.getElementById('task_form').elements['title'].value;
+        const description = document.getElementById('task_form').elements['description'].value;
+        const dueDate = document.getElementById('task_form').elements['dueDate'].value;
+        const priority = document.getElementById('task_form').elements['priority'].value;
+        TodoManager.addTask(currentProject, title, description, dueDate, priority);
+        displayTasks(currentProject);
+        taskDialog.close();
     }
 
     function clearMainDisplay() {

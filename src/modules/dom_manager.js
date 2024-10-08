@@ -36,6 +36,7 @@ export const DOMManager = (function () {
         projectDialog.close();
         taskDialog.close();
         document.getElementById("task_form").reset();
+        document.getElementById("project_form").reset();
     }
 
     function submitProject(event) {
@@ -114,6 +115,7 @@ export const DOMManager = (function () {
         TodoManager.addTask(currentProject, title, description, dueDate, priority);
         displayTasks(currentProject);
         taskDialog.close();
+        document.getElementById("task_form").reset();
     }
 
     function clearMainDisplay() {

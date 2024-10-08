@@ -35,6 +35,7 @@ export const DOMManager = (function () {
         event.preventDefault();
         projectDialog.close();
         taskDialog.close();
+        document.getElementById("task_form").reset();
     }
 
     function submitProject(event) {
@@ -55,6 +56,7 @@ export const DOMManager = (function () {
         });
         displayTasks(newProject);
         projectDialog.close();
+        document.getElementById("project_form").reset();
     }
 
     function displayAllTasks() {

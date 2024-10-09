@@ -131,4 +131,4 @@ export const DOMManager = (function () {
         showTaskDialog,
         submitTask
     }
-})()
+}())

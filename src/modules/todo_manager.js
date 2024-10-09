@@ -1,5 +1,5 @@
-import { Task } from './task.js';
-import { Project } from './project.js';
+import { Task } from './task';
+import { Project } from './project';
 
 export const TodoManager = (function() {
     const allTasks = [];
